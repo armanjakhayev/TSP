@@ -17,37 +17,21 @@ public class Tour {
         start = null;
     }
 
-//    // creates the 4-point tour a->b->c->d->a (for debugging)
-//    public Tour(Point a, Point b, Point c, Point d) {
-//        Node first = new Node(a);
-//        Node second = new Node(b);
-//        Node third = new Node(c);
-//        Node fourth = new Node(d);
-//    }
+    // creates the 4-point tour a->b->c->d->a (for debugging)
+    public Tour(Point a, Point b, Point c, Point d) {
+        Node first = new Node(a);
+        start = first;
 
-//    public void addNode(Point e) {
-//        Node newNode = new Node(e);
-//
-//        // degenerate case for empty quote
-//        if (start == null) {
-//            start = newNode;
-//            start.next = start;
-//        }
-//
-//        // otherwise
-//        else {
-//
-//            // find the "last" node in the circular linked list
-//            Node x = start;
-//            do {
-//                x = x.next;
-//            } while (x.next != start);
-//
-//            // insert new node
-//            newNode.next = start;
-//            x.next = newNode;
-//        }
-//    }
+        Node second = new Node(b);
+        first.next = second;
+
+        Node third = new Node(c);
+        second.next = third;
+
+        Node fourth = new Node(d);
+        third.next = fourth;
+        fourth.next = start;
+    }
 
     // returns the number of points in this tour
     public int size() {
@@ -65,12 +49,12 @@ public class Tour {
     // returns the length of this tour
     public double length() {
         if (start == null) return 0;
-        Tour.Node current = start;
+        Node current = start;
         double length = 0.0;
         do {
-            current = current.next;
             double distance = current.p.distanceTo(current.next.p);
             length += distance;
+            current = current.next;
         } while (current != start);
         return length;
     }
@@ -80,7 +64,7 @@ public class Tour {
         String s = "";
         if (start == null) return s;
 
-        Tour.Node current = start;
+        Node current = start;
         do {
             s = s + current.p + " ";
             current = current.next;
@@ -99,27 +83,60 @@ public class Tour {
     }
 
     // inserts p using the nearest neighbor heuristic
-//    public void insertNearest(Point p) {
-//        Tour.Node current = start;
-//
-//        double min = Double.MAX_VALUE;
-//        Tour.Node minNode = start;
-//        Tour.Node newNode = new Tour.Node(p);
-//        do {
-//            current = current.next;
-//            double distance = p.distanceTo(current.p);
-//            if (distance < min) {
-//                min = distance;
-//                minNode.next = current;
-//            }
-//        } while (current != start);
-//
-//    }
+    public void insertNearest(Point p) {
+        if (start == null) {
+            start = new Node(p);
+            start.next = start;
+            return;
+        }
+
+        Node current = start;
+        Node newNode = new Node(p);
+        double min = Double.MAX_VALUE;
+        Node minNode = start;
+
+        do {
+            // System.out.println(p);
+            // System.out.println(current);
+            double distance = p.distanceTo(current.p);
+            if (distance < min) {
+                min = distance;
+                minNode = current;
+            }
+            current = current.next;
+        } while (current != start);
+        newNode.next = minNode.next;
+        minNode.next = newNode;
+    }
 
     // inserts p using the smallest increase heuristic
-//    public void insertSmallest(Point p) {
-//
-//    }
+    public void insertSmallest(Point p) {
+        if (start == null) {
+            start = new Node(p);
+            start.next = start;
+            return;
+        }
+
+        Node current = start;
+        Node newNode = new Node(p);
+        double min = Double.MAX_VALUE;
+        Node minNode = start;
+
+        do {
+            double a = current.p.distanceTo(p);
+            double b = p.distanceTo(current.next.p);
+            double c = current.p.distanceTo(current.next.p);
+            double delta = a + b - c;
+            if (delta < min) {
+                min = delta;
+                minNode = current;
+            }
+            current = current.next;
+        } while (current != start);
+        newNode.next = minNode.next;
+        minNode.next = newNode;
+
+    }
 
     // tests this class by calling all constructors and instance methods
     public static void main(String[] args) {
@@ -129,20 +146,18 @@ public class Tour {
         Point b = new Point(1.0, 4.0);
         Point c = new Point(4.0, 4.0);
         Point d = new Point(4.0, 1.0);
-        Point e = new Point(5.0, 6.0);
+        Tour squareTour = new Tour(a, b, c, d);
+
 
         StdDraw.setXscale(0, 6);
         StdDraw.setYscale(0, 6);
 
 
-        // create the tour a -> b -> c -> d -> a
-        Tour squareTour = new Tour(a, b, c, d);
-        double length = squareTour.length();
-        System.out.println("Tour size = " + squareTour.size());
-        System.out.println("Tour length = " + length);
-        System.out.println(squareTour.toString());
-        System.out.println(squareTour.draw());
-
+        // // create the tour a -> b -> c -> d -> a
+        Point e = new Point(5.0, 6.0);
+        // squareTour.insertNearest(e);
+        squareTour.insertSmallest(e);
+        squareTour.draw();
 
     }
 }

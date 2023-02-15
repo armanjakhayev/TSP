@@ -9,7 +9,7 @@ ANYWHERE IN THIS SUBMISSION.
  * Approximate number of hours to complete this assignment            *
  **********************************************************************/
 
-Number of hours:
+Number of hours: 30
 
 
 
@@ -17,7 +17,7 @@ Number of hours:
  *  Explain how you implemented the nearest insertion heuristic.      *
  **********************************************************************/
 
-
+I tried to find the nearest point to E-point, then changed the tour based on it.
 
 /**********************************************************************
  *  Explain how you implemented the smallest insertion heuristic.     *
@@ -25,7 +25,7 @@ Number of hours:
  *  heuristic and the nearest insertion heuristic.                    *
  **********************************************************************/
 
-
+I tried to find the smallest delta (difference of the tour), then changed the tour based on it.
 
 /**********************************************************************
  *  First, explain why it is better to use a linked list instead of   *
@@ -34,11 +34,10 @@ Number of hours:
  **********************************************************************/
 
 1.
+    1.1. Better, if you don't know how many items you will have.
+    1.2. Easier to change.
 
-
-2.
-
-
+2. Many more possibilities
 
 /**********************************************************************
  *  In the table below, fill in the lengths that are computed by the  *
@@ -49,9 +48,9 @@ Number of hours:
 data file      nearest neighbor     smallest increase
 -----------------------------------------------------
 tsp10.txt         1566.1363             1655.7462
-tsp100.txt
-tsp1000.txt
-usa13509.txt
+tsp100.txt        7389.9297             4887.2190
+tsp1000.txt       27868.7106            17265.6282
+usa13509.txt      77449.9794            45074.7769
 
 /**********************************************************************
  *  Do two timing analyses. Estimate the running time (in seconds)    *
@@ -75,8 +74,8 @@ usa13509.txt
 
 n               nearest time           smallest time
 ------------------------------------------------------------
-1000
-2000
+1000            0.007 seconds           0.01 seconds
+2000            0.017 seconds           0.021 seconds
 ...
 
 
@@ -109,7 +108,7 @@ n               nearest time           smallest time
  *  or "Office hours on Thursday" is ok if you don't know their name.)
  **********************************************************************/
 
-Yes or no?
+Yes or no? Yes, Ardak and Gulnaz helped me with the project.
 
 
 
@@ -117,11 +116,11 @@ Yes or no?
  *  Did you encounter any serious problems? If so, please describe.
  **********************************************************************/
 
-Yes or no?
+Yes or no? Yes, with do-while loop.
 
 
 
 /**********************************************************************
- *  List any other comments here.                                     
+ *  List any other comments here.
  **********************************************************************/
 
